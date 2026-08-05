@@ -1,0 +1,35 @@
+<suite name="Parallel Suite" parallel="tests" thread-count="2">
+
+    <test name="Chrome Test">
+
+        <parameter name="browser" value="chrome"/>
+
+        <groups>
+            <run>
+                <include name="Regression"/>
+            </run>
+        </groups>
+
+        <classes>
+            <class name="tests.LaunchTest"/>
+        </classes>
+
+    </test>
+
+    <test name="Edge Test">
+
+        <parameter name="browser" value="edge"/>
+
+        <groups>
+            <run>
+                <include name="Regression"/>
+            </run>
+        </groups>
+
+        <classes>
+            <class name="tests.LaunchTest"/>
+        </classes>
+
+    </test>
+
+</suite>

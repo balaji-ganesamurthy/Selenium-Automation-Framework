@@ -1,0 +1,30 @@
+<suite name="Automation Suite">
+	<test name="Edge Test">
+		<parameter name="browser" value="edge" />
+
+		<groups>
+			<run>
+				<include name="Regression" />
+			</run>
+		</groups>
+
+		<classes>
+			<class name="tests.LaunchTest" />
+		</classes>
+	</test>
+
+	<test name="Chrome Test">
+		<parameter name="browser" value="chrome" />
+
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+
+		<classes>
+			<class name="tests.LaunchTest" />
+		</classes>
+	</test>
+
+</suite>
