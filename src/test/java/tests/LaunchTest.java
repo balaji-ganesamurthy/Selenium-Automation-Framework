@@ -1,6 +1,5 @@
 package tests;
 
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -9,6 +8,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -29,12 +29,12 @@ public class LaunchTest {
 	private static final Logger logger = LogManager.getLogger(LaunchTest.class);
 	private PageObjectManager pageObjectManager;
 	private HomePage homePage;
-	
+
 	@BeforeMethod(alwaysRun = true)
 	@Parameters("browser")
 	public void browserSetUp(@Optional("edge") String browser) {
 		BaseClass.setUp(browser);
-		 pageObjectManager = new PageObjectManager(BaseClass.getDriver());
+		pageObjectManager = new PageObjectManager(BaseClass.getDriver());
 
 	}
 
@@ -79,7 +79,10 @@ public class LaunchTest {
 		loginPage.enterPassword(password);
 		loginPage.clickLogin();
 		homePage = pageObjectManager.getHomePage();
-		Assert.assertTrue(homePage.isTitleDisplayed());
+		SoftAssert softAssert = new SoftAssert();
+		softAssert.assertTrue(homePage.isTitleDisplayed());
+		softAssert.assertTrue(homePage.isShoppingCartDisplayed());
+		softAssert.assertAll();
 		logger.info("User logged in successfully.");
 	}
 

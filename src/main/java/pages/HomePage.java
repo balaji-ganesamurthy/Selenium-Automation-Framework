@@ -15,11 +15,14 @@ public class HomePage {
 	}
 
 	private By Title = By.xpath("//span[normalize-space(text())='Products']"); 
+	private By shoppingCartLink = By.className("shopping_cart_link");
 
 	public boolean isTitleDisplayed() {
 		return waitUtils.waitForElementVisible(Title).isDisplayed();
-		
+	}
 
+	public boolean isShoppingCartDisplayed() {
+		return waitUtils.waitForElementVisible(shoppingCartLink).isDisplayed();
 	}
 
 }
