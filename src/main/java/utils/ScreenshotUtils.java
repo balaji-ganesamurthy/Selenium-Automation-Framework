@@ -32,7 +32,12 @@ public class ScreenshotUtils {
 			FileUtils.copyFile(sourceFile, destinationFile);
 		} catch (IOException e) {
 			e.printStackTrace();
-			}
-		return destinationFile.getAbsolutePath();
 		}
+		return destinationFile.getAbsolutePath();
 	}
+
+	public byte[] takeScreenshotAsBytes() {
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		return ts.getScreenshotAs(OutputType.BYTES);
+	}
+}

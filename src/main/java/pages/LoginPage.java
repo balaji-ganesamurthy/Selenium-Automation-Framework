@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import utils.ConfigReader;
 import utils.WaitUtils;
 
 public class LoginPage {
@@ -22,6 +24,10 @@ public class LoginPage {
 	private By passwordTextBox = By.id("password");
 	private By loginButton = By.id("login-button");
 
+	public void launchApplication() {
+		driver.get(ConfigReader.getURL());
+	}
+
 	public void enterUserName(String username) {
 		waitUtils.waitForElementVisible(usernameTextBox).sendKeys(username);
 		logger.info("Username entered successfully");
@@ -32,11 +38,9 @@ public class LoginPage {
 		logger.info("Password entered successfully");
 	}
 
-	public HomePage clickLogin() {
-		waitUtils.waitForElementVisible(loginButton).click();
-		logger.info("Login button clicked.");
-		return new HomePage(driver);
-
+	public void clickLogin() {
+	    waitUtils.waitForElementVisible(loginButton).click();
+	    logger.info("Login button clicked.");
 	}
 
 }

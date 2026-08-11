@@ -21,17 +21,20 @@ import utils.ExtentReportUtils;
 import utils.ScreenshotUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utils.PageObjectManager;
+import org.testng.annotations.Optional;
 
 public class LaunchTest {
 
 	private static final Logger logger = LogManager.getLogger(LaunchTest.class);
-
-	BaseClass base = new BaseClass();
-
+	private PageObjectManager pageObjectManager;
+	private HomePage homePage;
+	
 	@BeforeMethod(alwaysRun = true)
 	@Parameters("browser")
-	public void browserSetUp(String browser) {
-		base.setUp(browser);
+	public void browserSetUp(@Optional("edge") String browser) {
+		BaseClass.setUp(browser);
+		 pageObjectManager = new PageObjectManager(BaseClass.getDriver());
 
 	}
 
@@ -71,10 +74,11 @@ public class LaunchTest {
 		System.out.println("Thread : " + Thread.currentThread().getName());
 		System.out.println("Browser: " + BaseClass.getDriver());
 		logger.info("Starting Login Test");
-		LoginPage loginPage = new LoginPage(BaseClass.getDriver());
+		LoginPage loginPage = pageObjectManager.getLoginPage();
 		loginPage.enterUserName(username);
 		loginPage.enterPassword(password);
-		HomePage homePage = loginPage.clickLogin();
+		loginPage.clickLogin();
+		homePage = pageObjectManager.getHomePage();
 		Assert.assertTrue(homePage.isTitleDisplayed());
 		logger.info("User logged in successfully.");
 	}
@@ -103,7 +107,7 @@ public class LaunchTest {
 			test.pass("Test Passed");
 		}
 
-		base.tearDown();
+		BaseClass.tearDown();
 
 	}
 

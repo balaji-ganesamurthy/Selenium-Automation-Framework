@@ -18,7 +18,7 @@ public class BaseClass {
 	    return driver.get();
 	}
 
-	public WebDriver setUp(String browser) {
+	public static WebDriver setUp(String browser) {
 		String url = ConfigReader.getURL();
 		logger.info("Launching browser: {}", browser);
 
@@ -55,7 +55,7 @@ public class BaseClass {
 
 	}
 
-	public void tearDown() {
+	public static void tearDown() {
 		if (driver.get() != null) {
 			logger.info("Closing browser.");
 			driver.get().quit();
