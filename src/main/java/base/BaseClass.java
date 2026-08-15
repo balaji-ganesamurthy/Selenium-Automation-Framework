@@ -7,6 +7,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import utils.ConfigReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 
 public class BaseClass {
 
@@ -23,19 +25,36 @@ public class BaseClass {
 		logger.info("Launching browser: {}", browser);
 
 		try {
+			
+			boolean headless = ConfigReader.isHeadless();
+			
 			switch (browser.toLowerCase()) {
 
 			case "chrome":
-				WebDriverManager.chromedriver().setup();
-				driver.set(new ChromeDriver());
-				logger.info("Chrome browser launched successfully.");
-				break;
+			    WebDriverManager.chromedriver().setup();
+
+			    ChromeOptions chromeOptions = new ChromeOptions();
+
+			    if (headless) {
+			        chromeOptions.addArguments("--headless");
+			    }
+
+			    driver.set(new ChromeDriver(chromeOptions));
+			    logger.info("Chrome browser launched successfully.");
+			    break;
 
 			case "edge":
-				WebDriverManager.edgedriver().setup();
-				driver.set(new EdgeDriver());
-				logger.info("Edge browser launched successfully.");
-				break;
+			    WebDriverManager.edgedriver().setup();
+
+			    EdgeOptions edgeOptions = new EdgeOptions();
+
+			    if (headless) {
+			        edgeOptions.addArguments("--headless");
+			    }
+
+			    driver.set(new EdgeDriver(edgeOptions));
+			    logger.info("Edge browser launched successfully.");
+			    break;
 
 			default:
 				logger.error("Invalid browser specified: {}", browser);
