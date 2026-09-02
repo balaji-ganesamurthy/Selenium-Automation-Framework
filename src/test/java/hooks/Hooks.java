@@ -21,7 +21,6 @@ public class Hooks {
 		if (scenario.isFailed()) {
 
 			ScreenshotUtils screenshotUtils = new ScreenshotUtils(BaseClass.getDriver());
-			
 
 	        byte[] screenshot = screenshotUtils.takeScreenshotAsBytes();
 	        

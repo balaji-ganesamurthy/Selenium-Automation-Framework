@@ -9,10 +9,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class BaseClass {
 
-	private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+	private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 	
 	private static final Logger logger = LogManager.getLogger(BaseClass.class);
 	
@@ -34,7 +37,15 @@ public class BaseClass {
 			    WebDriverManager.chromedriver().setup();
 
 			    ChromeOptions chromeOptions = new ChromeOptions();
+			    
+			    Map<String, Object> chromePrefs = new HashMap<>();
+			    
+			    chromePrefs.put("credentials_enable_service", false);
+			    chromePrefs.put("profile.password_manager_enabled", false);
+			    chromePrefs.put("profile.password_manager_leak_detection", false);
 
+			    chromeOptions.setExperimentalOption("prefs", chromePrefs);
+			    
 			    if (headless) {
 			        chromeOptions.addArguments("--headless");
 			    }

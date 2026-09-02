@@ -10,7 +10,7 @@ import utils.ExtentReportUtils;
 
 public class TestListener implements ITestListener {
 	
-	private static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+	private static final ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 
 	@Override
 	public void onTestStart(ITestResult result) {
@@ -19,7 +19,15 @@ public class TestListener implements ITestListener {
 
 	    ExtentReports extent = ExtentReportUtils.getReport();
 
-	    ExtentTest test = extent.createTest(result.getName());
+	    String testName = result.getName();
+
+	    Object[] parameters = result.getParameters();
+
+	    if (parameters.length > 0) {
+	        testName = testName + " - " + parameters[0];
+	    }
+
+	    ExtentTest test = extent.createTest(testName);
 
 	    extentTest.set(test);
 	}
@@ -30,6 +38,8 @@ public class TestListener implements ITestListener {
 	    System.out.println("Test Passed: " + result.getName());
 
 	    extentTest.get().pass("Test Passed");
+	    
+	    extentTest.remove();
 	}
 
 	@Override
@@ -47,11 +57,14 @@ public class TestListener implements ITestListener {
 	    extentTest.get().addScreenCaptureFromPath(screenshotPath);
 
 	    System.out.println("Failure screenshot captured: " + screenshotPath);
+	    
+	    extentTest.remove();
 	}
 
     @Override
     public void onTestSkipped(ITestResult result) {
     	extentTest.get().skip("Test Skipped");
         System.out.println("Test Skipped: " + result.getName());
+        extentTest.remove();
     }
 }

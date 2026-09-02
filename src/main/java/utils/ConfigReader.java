@@ -12,20 +12,25 @@ public class ConfigReader {
         try {
 
             // Load environment selector
-            FileInputStream envFile =
-                    new FileInputStream("src/test/resources/config/config.properties");
-
             Properties envProperties = new Properties();
-            envProperties.load(envFile);
+
+            try (FileInputStream envFile =
+                    new FileInputStream("src/test/resources/config/config.properties")) {
+
+                envProperties.load(envFile);
+            }
 
             String environment = envProperties.getProperty("environment");
-            
-            FileInputStream configFile =
-                    new FileInputStream(
-                            "src/test/resources/config/config-" + environment + ".properties");
 
+            // Load environment-specific configuration
             prop = new Properties();
-            prop.load(configFile);
+
+            try (FileInputStream configFile =
+                    new FileInputStream(
+                            "src/test/resources/config/config-" + environment + ".properties")) {
+
+                prop.load(configFile);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

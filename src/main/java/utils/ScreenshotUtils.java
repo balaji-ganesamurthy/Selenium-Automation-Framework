@@ -21,19 +21,36 @@ public class ScreenshotUtils {
 	}
 
 	public String takeScreenshot(String testName) {
-		TakesScreenshot ts = (TakesScreenshot) driver;
-		File sourceFile = ts.getScreenshotAs(OutputType.FILE);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-		String timestamp = LocalDateTime.now().format(formatter);
-		String fileName = testName + "_" + timestamp + ".png";
-		String filePath = "src/test/resources/screenshots/" + fileName;
-		File destinationFile = new File(filePath);
-		try {
-			FileUtils.copyFile(sourceFile, destinationFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return destinationFile.getAbsolutePath();
+
+	    TakesScreenshot ts = (TakesScreenshot) driver;
+
+	    File sourceFile = ts.getScreenshotAs(OutputType.FILE);
+
+	    DateTimeFormatter formatter =
+	            DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+
+	    String timestamp = LocalDateTime.now().format(formatter);
+
+	    String fileName = testName + "_" + timestamp + ".png";
+
+	    String directoryPath = "src/test/resources/screenshots/";
+
+	    File screenshotDirectory = new File(directoryPath);
+
+	    if (!screenshotDirectory.exists()) {
+	        screenshotDirectory.mkdirs();
+	    }
+
+	    File destinationFile =
+	            new File(directoryPath + fileName);
+
+	    try {
+	        FileUtils.copyFile(sourceFile, destinationFile);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
+	    return destinationFile.getAbsolutePath();
 	}
 
 	public byte[] takeScreenshotAsBytes() {

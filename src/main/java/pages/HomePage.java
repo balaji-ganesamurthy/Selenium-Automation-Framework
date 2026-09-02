@@ -3,26 +3,54 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import utils.WaitUtils;
+public class HomePage extends BasePage {
 
-public class HomePage {
+    public HomePage(WebDriver driver) {
+        super(driver);
+    }
 
-	private WaitUtils waitUtils;
+    private By title =
+            By.xpath("//span[normalize-space(text())='Products']");
 
-	public HomePage(WebDriver driver) {
+    private By shoppingCartLink =
+            By.className("shopping_cart_link");
 
-		waitUtils = new WaitUtils(driver);
-	}
+    private By hamburgerMenu =
+            By.id("react-burger-menu-btn");
 
-	private By Title = By.xpath("//span[normalize-space(text())='Products']"); 
-	private By shoppingCartLink = By.className("shopping_cart_link");
+    private By logoutLink =
+            By.id("logout_sidebar_link");
 
-	public boolean isTitleDisplayed() {
-		return waitUtils.waitForElementVisible(Title).isDisplayed();
-	}
+    public boolean isTitleDisplayed() {
+    	return isDisplayed(title);
+    }
 
-	public boolean isShoppingCartDisplayed() {
-		return waitUtils.waitForElementVisible(shoppingCartLink).isDisplayed();
-	}
+    public boolean isShoppingCartDisplayed() {
+    	 return isDisplayed(shoppingCartLink);
+    }
 
+    public void addProductToCart(String productName) {
+
+        String productId =
+                productName.toLowerCase().replace(" ", "-");
+
+        By addToCartButton =
+                By.id("add-to-cart-" + productId);
+
+        click(addToCartButton);
+    }
+
+    public CartPage clickShoppingCart() {
+    	 click(shoppingCartLink);
+        return new CartPage(driver);
+    }
+
+    public void clickHamburgerMenu() {
+    	click(hamburgerMenu);
+    }
+
+    public LoginPage clickLogout() {
+    	click(logoutLink);
+        return new LoginPage(driver);
+    }
 }

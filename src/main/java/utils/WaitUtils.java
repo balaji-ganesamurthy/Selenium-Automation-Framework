@@ -20,4 +20,8 @@ public class WaitUtils {
 	public WebElement waitForElementVisible(By locator) {
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
+	
+	public WebElement waitForElementClickable(By locator) {
+	    return wait.until(ExpectedConditions.elementToBeClickable(locator));
+	}
 }
