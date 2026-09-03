@@ -35,7 +35,7 @@ public class LaunchTest {
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters("browser")
-	public void browserSetUp(@Optional("edge") String browser) {
+	public void browserSetUp(@Optional("chrome") String browser) {
 		BaseClass.setUp(browser);
 		}
 
