@@ -12,7 +12,7 @@ Feature: Complete Purchase Flow
     When User finishes the order
     Then Checkout complete page should be displayed
     And Thank you message should be displayed
-    When User goes back home
+    When User goes back home               
     And User logs out
     Then Login page should be displayed
 
@@ -20,3 +20,6 @@ Feature: Complete Purchase Flow
       | username      | password     | product                     | firstName | lastName       | zipCode |
       | standard_user | secret_sauce | Sauce Labs Backpack         | Balaji    | G              | 600001  |
       | visual_user   | secret_sauce | Sauce Labs Fleece Jacket    | Balaji    | Ganesamurthy   | 600001  |
+      
+      
+      
