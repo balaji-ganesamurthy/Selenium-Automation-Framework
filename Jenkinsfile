@@ -30,6 +30,8 @@ pipeline {
                     alwaysLinkToLastBuild: true,
                     allowMissing: false
                 ])
+                
+                   archiveArtifacts artifacts: 'reports/**'
             }
         }
 
