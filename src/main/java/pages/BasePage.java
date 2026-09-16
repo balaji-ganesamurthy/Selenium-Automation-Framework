@@ -30,4 +30,5 @@ public class BasePage {
     protected String getValue(By locator) {
         return waitUtils.waitForElementVisible(locator).getAttribute("value");
     }
+    
 }
