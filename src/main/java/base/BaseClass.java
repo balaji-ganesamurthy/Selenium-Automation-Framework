@@ -62,6 +62,10 @@ public class BaseClass {
 			    if (headless) {
 			        edgeOptions.addArguments("--headless");
 			    }
+			    
+			    edgeOptions.addArguments("--disable-extensions");
+			    edgeOptions.addArguments("--disable-gpu");
+			    edgeOptions.addArguments("--no-first-run");
 
 			    driver.set(new EdgeDriver(edgeOptions));
 			    logger.info("Edge browser launched successfully.");
